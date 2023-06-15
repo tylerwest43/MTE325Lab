@@ -68,62 +68,79 @@
   * @brief The FW main module
   */
 
-int main(void)
-{
-  /* NUCLEO board initialization */
-  NUCLEO_Board_Init();
-  
-  /* X-NUCLEO-IHM02A1 initialization */
-  BSP_Init();
-  
+int main(void) {
+	/* NUCLEO board initialization */
+	NUCLEO_Board_Init();
+
+	/* X-NUCLEO-IHM02A1 initialization */
+	BSP_Init();
+
 #ifdef NUCLEO_USE_USART
   /* Transmit the initial message to the PC via UART */
   USART_TxWelcomeMessage();
 #endif
-  
-  //GPIO Ports Clock Enable
-   __HAL_RCC_GPIOC_CLK_ENABLE();
-   __HAL_RCC_GPIOH_CLK_ENABLE();
-   __HAL_RCC_GPIOA_CLK_ENABLE();
-   __HAL_RCC_GPIOB_CLK_ENABLE();
 
-  GPIO_InitTypeDef GPIO_InitStruct1;
-  GPIO_InitTypeDef GPIO_InitStruct2;
+	// Create GPIO Structs to manipulate
+	GPIO_InitTypeDef GPIO_InitStruct1;
+	GPIO_InitTypeDef GPIO_InitStruct2;
 
-  // Configure pin as output
-  GPIO_InitStruct2.Pin = GPIO_PIN_1;
-  GPIO_InitStruct2.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct2.Pull = GPIO_PULLUP;
-  GPIO_InitStruct2.Speed = GPIO_SPEED_FAST;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct2);
+	// Configure pin 13 on GPIO C as input from push button
+	GPIO_InitStruct1.Pin = GPIO_PIN_13;
+	GPIO_InitStruct1.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct1.Pull = GPIO_NOPULL;
+	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct1);
 
-  // Configure pin as input from push button
-  GPIO_InitStruct1.Pin = GPIO_PIN_4;
-  GPIO_InitStruct1.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct1.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct1);
+	// Configure pin 1 on GPIO A as output
+	GPIO_InitStruct2.Pin = GPIO_PIN_1;
+	GPIO_InitStruct2.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct2.Pull = GPIO_PULLUP;
+	GPIO_InitStruct2.Speed = GPIO_SPEED_FAST;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct2);
 
-  /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+	// Variable to track the status of the light (1 is on, 0 is off)
+	int lightOn = 0;
 
-  USART_Transmit(&huart2, (uint8_t* )"Pin 1 Initialization Complete");
+	// Variable to hold status of pin read on each loop iteration
+	int pin13Set = 0;
 
-    int x = 0;
-    while(1)
-      {
-    	x++;
-    	x--;
-    	  // SET for PULLUP means that the switch is closed
-//    	  if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET)
-//    	  {
-//    		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
-//    	  }
-//    	  else
-//    	  {
-//    		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
-//    	  }
-     }
+	// Variable to count the number of consecutive reads of push button pin for debouncing
+	int numConsecReads = 0;
+
+	while (1)
+	{
+		// If pin13Set resolves to 0 (GPIO_PIN_RESET) then that means the button is pressed
+		// If pin13Set resolves to 1 (GPIO_PIN_SET) then that means the button is not pressed
+		pin13Set = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13);
+
+		// Debouncing code, require that we get 30 consecutive reads of the
+		// button being pushed before taking action
+
+		// Add one to the read counter if the button is being pushed
+		if (pin13Set == GPIO_PIN_RESET)
+		{
+			numConsecReads++;
+		}
+		// Reset the read counter to 0 if the button is not being pushed
+		else
+		{
+			numConsecReads = 0;
+		}
+
+		// Button has been pushed and light is not already on
+		if (numConsecReads == 30 && lightOn == 0)
+		{
+			// Turn on the light and record the state of the light
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+			lightOn = 1;
+		}
+		// Button has been pushed and light is already on
+		else if (numConsecReads == 30 && lightOn == 1)
+		{
+			// Turn off the light and record the state of the light
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
+			lightOn = 0;
+		}
+	}
 }
 
 #ifdef USE_FULL_ASSERT
