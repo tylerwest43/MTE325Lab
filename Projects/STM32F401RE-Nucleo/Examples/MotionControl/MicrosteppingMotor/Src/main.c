@@ -68,62 +68,43 @@
   * @brief The FW main module
   */
 
-int main(void)
-{
-  /* NUCLEO board initialization */
-  NUCLEO_Board_Init();
-  
-  /* X-NUCLEO-IHM02A1 initialization */
-  BSP_Init();
-  
+int main(void) {
+	/* NUCLEO board initialization */
+	NUCLEO_Board_Init();
+
+	/* X-NUCLEO-IHM02A1 initialization */
+	BSP_Init();
+
 #ifdef NUCLEO_USE_USART
   /* Transmit the initial message to the PC via UART */
   USART_TxWelcomeMessage();
 #endif
-  
-  //GPIO Ports Clock Enable
-   __HAL_RCC_GPIOC_CLK_ENABLE();
-   __HAL_RCC_GPIOH_CLK_ENABLE();
-   __HAL_RCC_GPIOA_CLK_ENABLE();
-   __HAL_RCC_GPIOB_CLK_ENABLE();
 
-  GPIO_InitTypeDef GPIO_InitStruct1;
-  GPIO_InitTypeDef GPIO_InitStruct2;
+	// Enable GPIO clocks (needed for interrupts)
+	__HAL_RCC_GPIOC_CLK_ENABLE();
+	__HAL_RCC_GPIOH_CLK_ENABLE();
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+	__HAL_RCC_GPIOB_CLK_ENABLE();
 
-  // Configure pin as output
-  GPIO_InitStruct2.Pin = GPIO_PIN_1;
-  GPIO_InitStruct2.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct2.Pull = GPIO_PULLUP;
-  GPIO_InitStruct2.Speed = GPIO_SPEED_FAST;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct2);
+	// Create GPIO structs to manipulate
+	GPIO_InitTypeDef GPIO_InitStruct1;
+	GPIO_InitTypeDef GPIO_InitStruct2;
 
-  // Configure pin as input from push button
-  GPIO_InitStruct1.Pin = GPIO_PIN_4;
-  GPIO_InitStruct1.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct1.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct1);
+	// Configure pin 13 on GPIO C as input from push button
+	GPIO_InitStruct1.Pin = GPIO_PIN_13;
+	GPIO_InitStruct1.Mode = GPIO_MODE_IT_RISING;
+	GPIO_InitStruct1.Pull = GPIO_NOPULL;
+	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct1);
 
-  /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+	// Configure pin 1 on GPIO A as output
+	GPIO_InitStruct2.Pin = GPIO_PIN_1;
+	GPIO_InitStruct2.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct2.Pull = GPIO_PULLUP;
+	GPIO_InitStruct2.Speed = GPIO_SPEED_FAST;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct2);
 
-  USART_Transmit(&huart2, (uint8_t* )"Pin 1 Initialization Complete");
-
-    int x = 0;
-    while(1)
-      {
-    	x++;
-    	x--;
-    	  // SET for PULLUP means that the switch is closed
-//    	  if(HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET)
-//    	  {
-//    		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
-//    	  }
-//    	  else
-//    	  {
-//    		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
-//    	  }
-     }
+	// While loop does nothing and waits for interrupt
+	while (1) {}
 }
 
 #ifdef USE_FULL_ASSERT
