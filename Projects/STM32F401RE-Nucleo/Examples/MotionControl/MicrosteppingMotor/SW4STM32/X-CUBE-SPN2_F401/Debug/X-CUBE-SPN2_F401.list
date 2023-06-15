@@ -21,25 +21,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
   8 .ARM.attributes 00000030  00000000  00000000  00020368  2**0
                   CONTENTS, READONLY
-  9 .debug_info   00014a95  00000000  00000000  00020398  2**0
+  9 .debug_info   00014aa7  00000000  00000000  00020398  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 10 .debug_abbrev 00002c5c  00000000  00000000  00034e2d  2**0
+ 10 .debug_abbrev 00002c74  00000000  00000000  00034e3f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 11 .debug_loc    00008e90  00000000  00000000  00037a89  2**0
+ 11 .debug_loc    00008e90  00000000  00000000  00037ab3  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 12 .debug_aranges 00000b98  00000000  00000000  00040920  2**3
+ 12 .debug_aranges 00000b98  00000000  00000000  00040948  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_ranges 00000b38  00000000  00000000  000414b8  2**3
+ 13 .debug_ranges 00000b38  00000000  00000000  000414e0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_macro  00010d86  00000000  00000000  00041ff0  2**0
+ 14 .debug_macro  00010d86  00000000  00000000  00042018  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_line   00012d01  00000000  00000000  00052d76  2**0
+ 15 .debug_line   00012d02  00000000  00000000  00052d9e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_str    000607fa  00000000  00000000  00065a77  2**0
+ 16 .debug_str    0006080b  00000000  00000000  00065aa0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .comment      00000050  00000000  00000000  000c6271  2**0
+ 17 .comment      00000050  00000000  00000000  000c62ab  2**0
                   CONTENTS, READONLY
- 18 .debug_frame  00002070  00000000  00000000  000c62c4  2**2
+ 18 .debug_frame  00002070  00000000  00000000  000c62fc  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -7860,6 +7860,10 @@ void USART_ITCharManager(UART_HandleTypeDef* huart) {
 int main(void) {
  800337c:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
  8003380:	b08a      	sub	sp, #40	; 0x28
+	// Constant defined for minimum consecutive reads when debouncing
+	// push button input
+	const int MIN_CONSEC_READS = 30;
+
 	/* NUCLEO board initialization */
 	NUCLEO_Board_Init();
  8003382:	f7fe f9b9 	bl	80016f8 <NUCLEO_Board_Init>
@@ -7922,7 +7926,7 @@ int main(void) {
  80033ba:	f44f 5500 	mov.w	r5, #8192	; 0x2000
 		}
 		// Button has been pushed and light is already on
-		else if (numConsecReads == 30 && lightOn == 1)
+		else if (numConsecReads == MIN_CONSEC_READS && lightOn == 1)
 		{
 			// Turn off the light and record the state of the light
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
@@ -7946,7 +7950,7 @@ int main(void) {
  80033de:	d1f8      	bne.n	80033d2 <main+0x56>
 			numConsecReads++;
  80033e0:	3401      	adds	r4, #1
-		if (numConsecReads == 30 && lightOn == 0)
+		if (numConsecReads == MIN_CONSEC_READS && lightOn == 0)
  80033e2:	2c1e      	cmp	r4, #30
  80033e4:	d1f6      	bne.n	80033d4 <main+0x58>
  80033e6:	2f00      	cmp	r7, #0

@@ -69,6 +69,11 @@
   */
 
 int main(void) {
+
+	// Constant defined for minimum consecutive reads when debouncing
+	// push button input
+	const int MIN_CONSEC_READS = 30;
+
 	/* NUCLEO board initialization */
 	NUCLEO_Board_Init();
 
@@ -127,14 +132,14 @@ int main(void) {
 		}
 
 		// Button has been pushed and light is not already on
-		if (numConsecReads == 30 && lightOn == 0)
+		if (numConsecReads == MIN_CONSEC_READS && lightOn == 0)
 		{
 			// Turn on the light and record the state of the light
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
 			lightOn = 1;
 		}
 		// Button has been pushed and light is already on
-		else if (numConsecReads == 30 && lightOn == 1)
+		else if (numConsecReads == MIN_CONSEC_READS && lightOn == 1)
 		{
 			// Turn off the light and record the state of the light
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);

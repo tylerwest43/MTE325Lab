@@ -1,2 +1,2 @@
 main.c:71:5:main	4
-main.c:155:6:assert_failed	1
+main.c:160:6:assert_failed	1
