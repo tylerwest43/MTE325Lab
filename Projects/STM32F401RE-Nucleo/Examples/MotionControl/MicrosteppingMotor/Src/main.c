@@ -90,14 +90,14 @@ int main(void) {
 	GPIO_InitTypeDef GPIO_InitStruct1;
 	GPIO_InitTypeDef GPIO_InitStruct2;
 
-	// Configure pin 0 on GPIO A as input from push button
-	GPIO_InitStruct1.Pin = GPIO_PIN_0;
+	// Configure pin 5 on GPIO B as input from push button
+	GPIO_InitStruct1.Pin = GPIO_PIN_5;
 	GPIO_InitStruct1.Mode = GPIO_MODE_IT_RISING;
-	GPIO_InitStruct1.Pull = GPIO_PULLUP;
-	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct1);
+	GPIO_InitStruct1.Pull = GPIO_PULLDOWN;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct1);
 
-	HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
-	HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 	// Configure pin 1 on GPIO A as output
 	GPIO_InitStruct2.Pin = GPIO_PIN_1;
