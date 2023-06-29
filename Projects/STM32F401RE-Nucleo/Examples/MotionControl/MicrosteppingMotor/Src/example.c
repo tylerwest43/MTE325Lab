@@ -291,18 +291,17 @@ uint32_t usrPow(uint8_t base, uint8_t exponent)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	switch (GPIO_Pin)
 	{
-		case GPIO_PIN_13:
-			// If the interrupt came from pin 13 (which is the push button
-			// for GPIO C), then toggle the output pin 1 on GPIO A to turn
+		case GPIO_PIN_0:
+			// If the interrupt came from pin 5 then toggle the output pin 1 on GPIO A to turn
 			// on the LED
 			HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
 			break;
-		case L6470_nBUSY_SYNC_GPIO_PIN:
-			BSP_L6470_BusySynchEventManager();
-			break;
-		case L6470_nFLAG_GPIO_PIN:
-			BSP_L6470_FlagEventManager();
-			break;
+//		case L6470_nBUSY_SYNC_GPIO_PIN:
+//			BSP_L6470_BusySynchEventManager();
+//			break;
+//		case L6470_nFLAG_GPIO_PIN:
+//			BSP_L6470_FlagEventManager();
+//			break;
 	}
 }
 
