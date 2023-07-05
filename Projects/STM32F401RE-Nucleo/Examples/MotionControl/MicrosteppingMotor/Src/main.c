@@ -111,7 +111,7 @@ int main(void) {
 	// Configure pin 6 on GPIO A as input from push button
 	GPIO_InitStruct6.Pin = GPIO_PIN_6;
 	GPIO_InitStruct6.Mode = GPIO_MODE_IT_FALLING;
-	GPIO_InitStruct6.Pull = GPIO_NOPULL;
+	GPIO_InitStruct6.Pull = GPIO_PULLDOWN;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct6);
 
 
@@ -125,19 +125,19 @@ int main(void) {
 	// Configure pin 8 on GPIO A as input from push button
 	GPIO_InitStruct8.Pin = GPIO_PIN_8;
 	GPIO_InitStruct8.Mode = GPIO_MODE_IT_FALLING;
-	GPIO_InitStruct8.Pull = GPIO_NOPULL;
+	GPIO_InitStruct8.Pull = GPIO_PULLDOWN;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct8);
 
 	// Configure pin 9 on GPIO A as input from push button
 	GPIO_InitStruct9.Pin = GPIO_PIN_9;
 	GPIO_InitStruct9.Mode = GPIO_MODE_IT_FALLING;
-	GPIO_InitStruct9.Pull = GPIO_NOPULL;
+	GPIO_InitStruct9.Pull = GPIO_PULLDOWN;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct9);
 
 	// Configure pin 10 on GPIO A as input from push button
 	GPIO_InitStruct10.Pin = GPIO_PIN_10;
 	GPIO_InitStruct10.Mode = GPIO_MODE_IT_FALLING;
-	GPIO_InitStruct10.Pull = GPIO_NOPULL;
+	GPIO_InitStruct10.Pull = GPIO_PULLDOWN;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct10);
 
 	//Enable the 5-9 IRQ and set the priority
