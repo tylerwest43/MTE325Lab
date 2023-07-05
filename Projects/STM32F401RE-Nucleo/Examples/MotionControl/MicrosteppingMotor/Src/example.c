@@ -291,12 +291,49 @@ uint32_t usrPow(uint8_t base, uint8_t exponent)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	switch (GPIO_Pin)
 	{
-		case GPIO_PIN_5:
+//		case GPIO_PIN_5:
+//			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
+//			// on the LED
+//			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
+//			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+//			break;
+		case GPIO_PIN_6:
 			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
 			// on the LED
-			// HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
+			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+			USART_Transmit(&huart2, (uint8_t* )"Pin 6");
 			break;
+//		case GPIO_PIN_7:
+//			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
+//			// on the LED
+//			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
+//			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+//			break;
+		case GPIO_PIN_8:
+			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
+			// on the LED
+			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
+			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+			USART_Transmit(&huart2, (uint8_t* )"Pin 8");
+			break;
+		case GPIO_PIN_9:
+			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
+			// on the LED
+			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
+			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+			USART_Transmit(&huart2, (uint8_t* )"Pin 9");
+			break;
+		case GPIO_PIN_10:
+			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
+			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+			USART_Transmit(&huart2, (uint8_t* )"Pin 10");
+			break;
+//		case GPIO_PIN_2:
+//			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
+//			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+//			break;
 		case L6470_nBUSY_SYNC_GPIO_PIN:
 			BSP_L6470_BusySynchEventManager();
 			break;

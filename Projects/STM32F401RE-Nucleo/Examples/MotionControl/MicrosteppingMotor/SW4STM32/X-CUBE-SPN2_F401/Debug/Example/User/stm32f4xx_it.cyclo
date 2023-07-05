@@ -2,7 +2,7 @@ stm32f4xx_it.c:61:6:SysTick_Handler	1
 stm32f4xx_it.c:77:6:EXTI1_IRQHandler	1
 stm32f4xx_it.c:85:6:EXTI0_IRQHandler	1
 stm32f4xx_it.c:90:6:EXTI2_IRQHandler	1
-stm32f4xx_it.c:95:6:EXTI3_IRQHandler	1
-stm32f4xx_it.c:103:6:USART2_IRQHandler	1
-stm32f4xx_it.c:112:6:EXTI15_10_IRQHandler	1
-stm32f4xx_it.c:118:6:EXTI9_5_IRQHandler	1
+stm32f4xx_it.c:101:6:EXTI4_IRQHandler	1
+stm32f4xx_it.c:109:6:USART2_IRQHandler	1
+stm32f4xx_it.c:118:6:EXTI15_10_IRQHandler	1
+stm32f4xx_it.c:124:6:EXTI9_5_IRQHandler	1

@@ -80,6 +80,8 @@ int main(void) {
   USART_TxWelcomeMessage();
 #endif
 
+  	USART_Transmit(&huart2, (uint8_t* )"Hello Tyler");
+
 	// Enable GPIO clocks (needed for interrupts)
 	__HAL_RCC_GPIOC_CLK_ENABLE();
 	__HAL_RCC_GPIOH_CLK_ENABLE();
@@ -88,23 +90,93 @@ int main(void) {
 
 	// Create GPIO structs to manipulate
 	GPIO_InitTypeDef GPIO_InitStruct1;
-	GPIO_InitTypeDef GPIO_InitStruct2;
+	GPIO_InitTypeDef GPIO_InitStruct6;
+	GPIO_InitTypeDef GPIO_InitStruct8;
+	GPIO_InitTypeDef GPIO_InitStruct9;
+	GPIO_InitTypeDef GPIO_InitStruct10;
 
-	// Configure pin 5 on GPIO B as input from push button
-	GPIO_InitStruct1.Pin = GPIO_PIN_5;
-	GPIO_InitStruct1.Mode = GPIO_MODE_IT_RISING;
-	GPIO_InitStruct1.Pull = GPIO_PULLDOWN;
-	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct1);
+//	GPIO_InitTypeDef GPIO_InitStruct2;
+////	GPIO_InitTypeDef GPIO_InitStruct4;
+//	GPIO_InitTypeDef GPIO_InitStruct5;
+//	GPIO_InitTypeDef GPIO_InitStruct10;
 
-	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+
+//	// Configure pin 5 on GPIO B as input from push button
+//	GPIO_InitStruct5.Pin = GPIO_PIN_5;
+//	GPIO_InitStruct5.Mode = GPIO_MODE_IT_FALLING;
+//	GPIO_InitStruct5.Pull = GPIO_NOPULL;
+//	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct5);
+
+
+	// Configure pin 6 on GPIO A as input from push button
+	GPIO_InitStruct6.Pin = GPIO_PIN_6;
+	GPIO_InitStruct6.Mode = GPIO_MODE_IT_FALLING;
+	GPIO_InitStruct6.Pull = GPIO_NOPULL;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct6);
+
+
+//	// Configure pin 7 on GPIO A as input from push button
+//	GPIO_InitStruct7.Pin = GPIO_PIN_7;
+//	GPIO_InitStruct7.Mode = GPIO_MODE_IT_FALLING;
+//	GPIO_InitStruct7.Pull = GPIO_PULLDOWN;
+//	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct7);
+
+
+	// Configure pin 8 on GPIO A as input from push button
+	GPIO_InitStruct8.Pin = GPIO_PIN_8;
+	GPIO_InitStruct8.Mode = GPIO_MODE_IT_FALLING;
+	GPIO_InitStruct8.Pull = GPIO_NOPULL;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct8);
+
+	// Configure pin 9 on GPIO A as input from push button
+	GPIO_InitStruct9.Pin = GPIO_PIN_9;
+	GPIO_InitStruct9.Mode = GPIO_MODE_IT_FALLING;
+	GPIO_InitStruct9.Pull = GPIO_NOPULL;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct9);
+
+	// Configure pin 10 on GPIO A as input from push button
+	GPIO_InitStruct10.Pin = GPIO_PIN_10;
+	GPIO_InitStruct10.Mode = GPIO_MODE_IT_FALLING;
+	GPIO_InitStruct10.Pull = GPIO_NOPULL;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct10);
+
+	//Enable the 5-9 IRQ and set the priority
+	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0x01, 0x00);
 	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
+	// Configure pin 4 on GPIO A as input from push button
+//	GPIO_InitStruct4.Pin = GPIO_PIN_4;
+//	GPIO_InitStruct4.Mode = GPIO_MODE_IT_RISING;
+//	GPIO_InitStruct4.Pull = GPIO_PULLDOWN;
+//	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct4);
+//
+//	HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
+//	HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+
+	// Configure pin 2 on GPIO A as input from push button
+//	GPIO_InitStruct2.Pin = GPIO_PIN_2;
+//	GPIO_InitStruct2.Mode = GPIO_MODE_IT_FALLING;
+//	GPIO_InitStruct2.Pull = GPIO_PULLDOWN;
+//	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct2);
+//
+//	HAL_NVIC_SetPriority(EXTI2_IRQn, 0, 0);
+//	HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+
+	// Configure pin 2 on GPIO A as input from push button
+//	GPIO_InitStruct10.Pin = GPIO_PIN_10;
+//	GPIO_InitStruct10.Mode = GPIO_MODE_IT_FALLING;
+//	GPIO_InitStruct10.Pull = GPIO_PULLDOWN;
+//	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct10);
+//
+//	HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
+//	HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+
 	// Configure pin 1 on GPIO A as output
-	GPIO_InitStruct2.Pin = GPIO_PIN_1;
-	GPIO_InitStruct2.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct2.Pull = GPIO_PULLUP;
-	GPIO_InitStruct2.Speed = GPIO_SPEED_FAST;
-	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct2);
+	GPIO_InitStruct1.Pin = GPIO_PIN_1;
+	GPIO_InitStruct1.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct1.Pull = GPIO_PULLUP;
+	GPIO_InitStruct1.Speed = GPIO_SPEED_FAST;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct1);
 
 	// While loop does nothing and waits for interrupt
 	while (1) {}
