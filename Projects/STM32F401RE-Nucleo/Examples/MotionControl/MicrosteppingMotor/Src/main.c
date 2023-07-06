@@ -60,6 +60,17 @@
   * @{
   */
 
+//#define MICROSTEPPING_MOTOR_EXAMPLE        //!< Uncomment to performe the standalone example
+#define MICROSTEPPING_MOTOR_USART_EXAMPLE  //!< Uncomment to performe the USART example
+#if ((defined (MICROSTEPPING_MOTOR_EXAMPLE)) && (defined (MICROSTEPPING_MOTOR_USART_EXAMPLE)))
+  #error "Please select an option only!"
+#elif ((!defined (MICROSTEPPING_MOTOR_EXAMPLE)) && (!defined (MICROSTEPPING_MOTOR_USART_EXAMPLE)))
+  #error "Please select an option!"
+#endif
+#if (defined (MICROSTEPPING_MOTOR_USART_EXAMPLE) && (!defined (NUCLEO_USE_USART)))
+  #error "Please define "NUCLEO_USE_USART" in "stm32fxxx_x-nucleo-ihm02a1.h"!"
+#endif
+
 /**
   * @}
   */ /* End of ExampleTypes */
@@ -90,7 +101,7 @@ int main(void) {
 
 	// Create GPIO structs to manipulate
 	GPIO_InitTypeDef GPIO_InitStruct1;
-	GPIO_InitTypeDef GPIO_InitStruct6;
+	GPIO_InitTypeDef GPIO_InitStruct7;
 	GPIO_InitTypeDef GPIO_InitStruct8;
 	GPIO_InitTypeDef GPIO_InitStruct9;
 	GPIO_InitTypeDef GPIO_InitStruct10;
@@ -109,17 +120,17 @@ int main(void) {
 
 
 	// Configure pin 6 on GPIO A as input from push button
-	GPIO_InitStruct6.Pin = GPIO_PIN_6;
-	GPIO_InitStruct6.Mode = GPIO_MODE_IT_FALLING;
-	GPIO_InitStruct6.Pull = GPIO_PULLDOWN;
-	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct6);
+//	GPIO_InitStruct6.Pin = GPIO_PIN_6;
+//	GPIO_InitStruct6.Mode = GPIO_MODE_IT_FALLING;
+//	GPIO_InitStruct6.Pull = GPIO_PULLDOWN;
+//	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct6);
 
 
-//	// Configure pin 7 on GPIO A as input from push button
-//	GPIO_InitStruct7.Pin = GPIO_PIN_7;
-//	GPIO_InitStruct7.Mode = GPIO_MODE_IT_FALLING;
-//	GPIO_InitStruct7.Pull = GPIO_PULLDOWN;
-//	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct7);
+	// Configure pin 7 on GPIO A as input from push button
+	GPIO_InitStruct7.Pin = GPIO_PIN_7;
+	GPIO_InitStruct7.Mode = GPIO_MODE_IT_FALLING;
+	GPIO_InitStruct7.Pull = GPIO_PULLDOWN;
+	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct7);
 
 
 	// Configure pin 8 on GPIO A as input from push button
@@ -178,8 +189,23 @@ int main(void) {
 	GPIO_InitStruct1.Speed = GPIO_SPEED_FAST;
 	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct1);
 
-	// While loop does nothing and waits for interrupt
-	while (1) {}
+#if defined (MICROSTEPPING_MOTOR_EXAMPLE)
+  /* Perform a batch commands for X-NUCLEO-IHM02A1 */
+  MicrosteppingMotor_Example_01();
+
+  /* Infinite loop */
+  while (1);
+#elif defined (MICROSTEPPING_MOTOR_USART_EXAMPLE)
+  /* Fill the L6470_DaisyChainMnemonic structure */
+  Fill_L6470_DaisyChainMnemonic();
+
+  /* Infinite loop */
+  while (1)
+  {
+    /* Check if any Application Command for L6470 has been entered by USART */
+    USART_CheckAppCmd();
+  }
+#endif
 }
 
 #ifdef USE_FULL_ASSERT

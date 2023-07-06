@@ -297,25 +297,28 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 //			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
 //			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
 //			break;
-		case GPIO_PIN_6:
+		//case GPIO_PIN_6:
 			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
 			// on the LED
 			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
 			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
-			USART_Transmit(&huart2, (uint8_t* )"Pin 6");
+			//USART_Transmit(&huart2, (uint8_t* )"Pin 6");
+			//break;
+		case GPIO_PIN_7:
+			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
+			// on the LED
+			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
+			USART_Transmit(&huart2, (uint8_t* )"Pin 7");
+			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+			L6470_HardStop(0);
 			break;
-//		case GPIO_PIN_7:
-//			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
-//			// on the LED
-//			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
-//			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
-//			break;
 		case GPIO_PIN_8:
 			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
 			// on the LED
 			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
 			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
 			USART_Transmit(&huart2, (uint8_t* )"Pin 8");
+			L6470_HardStop(0);
 			break;
 		case GPIO_PIN_9:
 			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
@@ -323,12 +326,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
 			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
 			USART_Transmit(&huart2, (uint8_t* )"Pin 9");
+			L6470_HardStop(1);
 			break;
 		case GPIO_PIN_10:
 			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
 			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
 			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
 			USART_Transmit(&huart2, (uint8_t* )"Pin 10");
+			L6470_HardStop(1);
 			break;
 //		case GPIO_PIN_2:
 //			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
