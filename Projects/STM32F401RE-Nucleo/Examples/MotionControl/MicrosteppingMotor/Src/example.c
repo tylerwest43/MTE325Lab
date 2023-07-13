@@ -310,7 +310,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
 			USART_Transmit(&huart2, (uint8_t* )"Pin 7");
 			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
-			L6470_HardStop(0);
+			//L6470_HardStop(0);
+			// Arguments are motor #, direction, speed
+			L6470_Run(0, L6470_DIR_FWD_ID, 7000);
 			break;
 		case GPIO_PIN_8:
 			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
@@ -318,7 +320,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
 			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
 			USART_Transmit(&huart2, (uint8_t* )"Pin 8");
-			L6470_HardStop(0);
+			L6470_Run(0, L6470_DIR_REV_ID, 7000);
+			//L6470_HardStop(0);
 			break;
 		case GPIO_PIN_9:
 			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
@@ -326,14 +329,16 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
 			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
 			USART_Transmit(&huart2, (uint8_t* )"Pin 9");
-			L6470_HardStop(1);
+			//L6470_HardStop(1);
+			L6470_Run(1, L6470_DIR_REV_ID, 1000);
 			break;
 		case GPIO_PIN_10:
 			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
 			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
 			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
 			USART_Transmit(&huart2, (uint8_t* )"Pin 10");
-			L6470_HardStop(1);
+			//L6470_HardStop(1);
+			L6470_Run(1, L6470_DIR_FWD_ID, 1000);
 			break;
 //		case GPIO_PIN_2:
 //			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
