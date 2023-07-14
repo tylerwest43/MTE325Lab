@@ -339,6 +339,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 //			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
 //			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
 //			break;
+		case GPIO_PIN_13:
+			L6470_Move(1, L6470_DIR_FWD_ID, 30000);
+			break;
 		case L6470_nBUSY_SYNC_GPIO_PIN:
 			BSP_L6470_BusySynchEventManager();
 			break;
