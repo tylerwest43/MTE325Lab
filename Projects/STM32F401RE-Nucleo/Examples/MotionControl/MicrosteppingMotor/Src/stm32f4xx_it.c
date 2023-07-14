@@ -92,13 +92,7 @@ void EXTI2_IRQHandler(void)
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_2);
 }
 
-//void EXTI3_IRQHandler(void)
-//{
-//  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
-//}
-
-// Tyler wrote this
-void EXTI4_IRQHandler(void)
+void EXTI3_IRQHandler(void)
 {
   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
 }
@@ -117,14 +111,22 @@ void USART2_IRQHandler(void)
 */
 void EXTI15_10_IRQHandler(void)
 {
-  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_10);
+	// Handles pin A10 for limit switch on two-axis machine
+	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_10);
 }
 
-// Tyler added this
+/**
+* @brief This function handles EXTI Line[9:5] interrupts.
+*/
 void EXTI9_5_IRQHandler(void)
 {
+	// Handles pin C7 for limit switch on two-axis machine
 	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_7);
+
+	// Handles pin A8 for limit switch on two-axis machine
 	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_8);
+
+	// Handle pin A9 for limit switch on two-axis machine
 	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_9);
 }
 
