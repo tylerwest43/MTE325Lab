@@ -291,59 +291,46 @@ uint32_t usrPow(uint8_t base, uint8_t exponent)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	switch (GPIO_Pin)
 	{
-//		case GPIO_PIN_5:
-//			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
-//			// on the LED
-//			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
-//			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
-//			break;
-		//case GPIO_PIN_6:
-			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
-			// on the LED
-			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
-			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
-			//USART_Transmit(&huart2, (uint8_t* )"Pin 6");
-			//break;
 		case GPIO_PIN_7:
-			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
-			// on the LED
-			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
+			// Output to terminal to notify that the limit switch associated
+			// with pin C7 was pressed
 			USART_Transmit(&huart2, (uint8_t* )"Pin 7");
-			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
-			//L6470_HardStop(0);
+
+			// This means that the platform hit the back limit switch
+			// so make motor 0 go forward toward the front limit switch
 			// Arguments are motor #, direction, speed
 			L6470_Run(0, L6470_DIR_FWD_ID, 7000);
 			break;
 		case GPIO_PIN_8:
-			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
-			// on the LED
-			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
-			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+			// Output to terminal to notify that the limit switch associated
+			// with pin A8 was pressed
 			USART_Transmit(&huart2, (uint8_t* )"Pin 8");
+
+			// This means that the platform hit the front limit switch
+			// so make motor 0 go reverse toward the back limit switch
+			// Arguments are motor #, direction, speed
 			L6470_Run(0, L6470_DIR_REV_ID, 7000);
-			//L6470_HardStop(0);
 			break;
 		case GPIO_PIN_9:
-			// If the interrupt came from pin 5 then turn the output pin 1 on GPIO A on to turn
-			// on the LED
-			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
-			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+			// Output to terminal to notify that the limit switch associated
+			// with pin A9 was pressed
 			USART_Transmit(&huart2, (uint8_t* )"Pin 9");
-			//L6470_HardStop(1);
+
+			// This means that the platform hit the right limit switch
+			// so make motor 1 go reverse toward the left limit switch
+			// Arguments are motor #, direction, speed
 			L6470_Run(1, L6470_DIR_REV_ID, 1000);
 			break;
 		case GPIO_PIN_10:
-			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
-			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
-			//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
+			// Output to terminal to notify that the limit switch associated
+			// with pin A10 was pressed
 			USART_Transmit(&huart2, (uint8_t* )"Pin 10");
-			//L6470_HardStop(1);
+
+			// This means that the platform hit the left limit switch
+			// so make motor 1 go forward toward the right limit switch
+			// Arguments are motor #, direction, speed
 			L6470_Run(1, L6470_DIR_FWD_ID, 1000);
 			break;
-//		case GPIO_PIN_2:
-//			//HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_1);
-//			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_SET);
-//			break;
 		case L6470_nBUSY_SYNC_GPIO_PIN:
 			BSP_L6470_BusySynchEventManager();
 			break;
