@@ -91,6 +91,8 @@ int main(void) {
   USART_TxWelcomeMessage();
 #endif
 
+  	HAL_Init();
+
   	USART_Transmit(&huart2, (uint8_t* )"Hello Tyler");
 
 	// Enable GPIO clocks (needed for interrupts)
@@ -199,11 +201,22 @@ int main(void) {
   /* Fill the L6470_DaisyChainMnemonic structure */
   Fill_L6470_DaisyChainMnemonic();
 
+  int counter = 0;
   /* Infinite loop */
   while (1)
   {
     /* Check if any Application Command for L6470 has been entered by USART */
     USART_CheckAppCmd();
+
+    if(counter < 1)
+    {
+    	// Arguments are motor #, direction, speed
+    	L6470_Run(1, L6470_DIR_FWD_ID, 25000);
+    	HAL_Delay(1000);
+    	L6470_HardStop(1);
+    	HAL_Delay(5000);
+    	counter++;
+    }
   }
 #endif
 }
