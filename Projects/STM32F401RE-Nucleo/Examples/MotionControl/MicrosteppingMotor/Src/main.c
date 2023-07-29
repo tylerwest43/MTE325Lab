@@ -201,6 +201,7 @@ int main(void) {
   /* Fill the L6470_DaisyChainMnemonic structure */
   Fill_L6470_DaisyChainMnemonic();
 
+  // Counter to run characterization code multiple times
   int counter = 0;
   /* Infinite loop */
   while (1)
@@ -208,13 +209,21 @@ int main(void) {
     /* Check if any Application Command for L6470 has been entered by USART */
     USART_CheckAppCmd();
 
+	// Can increase counter if moving at slow speed and run multiple
+	// tests without restarting
     if(counter < 1)
     {
     	// Arguments are motor #, direction, speed
     	L6470_Run(1, L6470_DIR_FWD_ID, 25000);
-    	HAL_Delay(1000);
+    	
+		// Delay for 1 second
+		HAL_Delay(1000);
+		
+		// Stop
     	L6470_HardStop(1);
-    	HAL_Delay(5000);
+    	
+		// Delay for 5 seconds to record pencil line
+		HAL_Delay(5000);
     	counter++;
     }
   }
